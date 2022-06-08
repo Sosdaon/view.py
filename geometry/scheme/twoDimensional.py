@@ -1,9 +1,10 @@
 import turtle
+from geometry.memory.trajectory import remember_direction, draw_remembered_line, compare_directions
 
 
 class Plan:
     def __init__(self, length=0, width=0, main_point=(0.0, 0.0), left_point=(0.0, 0.0), right_point=(0.0, 0.0),
-                 back_point=(0.0, 0.0)):
+                 back_point=(0.0, 0.0), measured_line_one=(), measured_line_two=(), intersection_point=(0.0, 0.0)):
         self.__CORNER = 90
         self.__LEFT_EDGE = -300
         self.__VERTICAL_INDENT = 180
@@ -13,6 +14,9 @@ class Plan:
         self.__left_point = left_point
         self.__right_point = right_point
         self.__back_point = back_point
+        self.__measured_line_one = measured_line_one
+        self.__measured_line_two = measured_line_two
+        self.__intersection_point = intersection_point
 
     def set_length(self, length):
         self.__length = length
@@ -31,6 +35,15 @@ class Plan:
 
     def set_back_point(self, back_point):
         self.__back_point = back_point
+
+    def set_measured_line_one(self, measured_line_one):
+        self.__measured_line_one = measured_line_one
+
+    def set_measured_line_two(self, measured_line_two):
+        self.__measured_line_two = measured_line_two
+
+    def set_intersection_point(self, intersection_point):
+        self.__intersection_point = intersection_point
 
     def get_length(self):
         return self.__length
@@ -58,6 +71,15 @@ class Plan:
 
     def get_back_point(self):
         return self.__back_point
+
+    def get_measured_line_one(self):
+        return self.__measured_line_one
+
+    def get_measured_line_two(self):
+        return self.__measured_line_two
+
+    def get_intersection_point(self):
+        return self.__intersection_point
 
     def get_point_of_view(self):
         self.__point_of_view = (
@@ -129,6 +151,7 @@ class Plan:
         turtle.goto(float(self.get_left_point()[0]), float(self.get_left_point()[1] - self.get_length()))
         turtle.pendown()
         turtle.goto(float(self.get_right_point()[0] + self.get_width()), float(self.get_right_point()[1]))
+        turtle.penup()
         self.turn_right()
 
 

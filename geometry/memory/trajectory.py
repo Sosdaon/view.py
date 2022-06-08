@@ -1,5 +1,6 @@
 import turtle
 
+
 def draw_remembered_line(line):
     if len(line) > 1:
         line_length = len(line)
@@ -30,8 +31,7 @@ def compare_directions(line_one, line_two):
                     intersection_point = line_one[index]
                     turtle.goto(intersection_point)
                     turtle.dot(7, 'red')
-                    print(f'Intersection point is: {intersection_point}')
-                    turtle.hideturtle()
+                    return (f'Intersection point is: {intersection_point}')
             else:
                 return print('There is no intersection point')
 
@@ -86,6 +86,7 @@ def remember_direction(x_start, y_start, x_finish, y_finish):
             measured_line.append(x_y_tuple)
             if turtle.pos()[0] < x_finish or turtle.pos()[1] > y_finish:
                 break
+
 
         elif x_decrement == False and y_decrement == True:
             x_step = x_step + x_percent
@@ -165,6 +166,7 @@ ________________________________________________________________________________
 '''
 
 '''
+
 measured_line = []
 remember_direction(34.0, 20.0, 58.0, 74.0)
 first_line = measured_line
