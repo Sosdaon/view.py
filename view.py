@@ -1,27 +1,82 @@
 import turtle
 from geometry.scheme.twoDimensional import Plan, Elevation
+intersection_point = 'empty'
 
 
-def compare_directions(line_one, line_two):
-    if len(line_one) > 1 and len(line_two) > 1:
+def compare_directions(line1, line2, index):
+    if len(line1) > 1 and len(line2) > 1 and index < len(line1):
+        global intersection_point
         turtle.penup()
-        line_length = len(line_one)
-        index = 0
 
-        while line_one[index] != line_two[index]:
-            if index < line_length - 1:
-                index += 1
-                if line_one[index] == line_two[index]:
-                    intersection_point = line_one[index]
-                    turtle.goto(intersection_point)
-                    turtle.dot(7, 'red')
-                    print(f'Intersection point is: {intersection_point}')
-                    return intersection_point
+        line1_x_y = line1[index]
+        x1 = line1_x_y[0]
+        y1 = line1_x_y[1]
+
+        line2_x_y = line2[index]
+        x2 = line2_x_y[0]
+        y2 = line2_x_y[1]
+
+        if x1 == x2 and y1 == y2:
+            intersection_point = line1[index]
+            turtle.goto(intersection_point)
+            turtle.dot(7, 'red')
+            print(f'Intersection point is: {intersection_point}')
+            return intersection_point
+
+        elif x1 >= x2 and y1 >= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 2.0 and y_difference < 2.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(7, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
             else:
-                return print('There is no intersection point')
+                index += 1
+                compare_directions(line1, line2, index=index)
 
-    else:
-        print('There is no line or there are no lines to compare')
+        elif x1 <= x2 and y1 <= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 2.0 and y_difference < 2.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(7, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            else:
+                index += 1
+                compare_directions(line1, line2, index=index)
+
+        elif x1 <= x2 and y1 >= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 2.0 and y_difference < 2.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(7, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            else:
+                index += 1
+                compare_directions(line1, line2, index=index)
+
+        elif x1 >= x2 and y1 <= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 2.0 and y_difference < 2.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(7, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            else:
+                index += 1
+                compare_directions(line1, line2, index=index)
+
+        else:
+            print('Something wrong before recursion')
 
 
 def remember_direction(x_start, y_start, x_finish, y_finish):
@@ -179,7 +234,7 @@ measured_line = []
 remember_direction(x_start2, y_start2, x_finish2, y_finish2)
 second_line = measured_line
 
-intersection_point = compare_directions(first_line, second_line)
+compare_directions(first_line, second_line, 0)
 
 print(f' line 1: {first_line}')
 print(f' line 2: {second_line}')
