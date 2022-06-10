@@ -1,5 +1,4 @@
 import turtle
-from geometry.memory.trajectory import remember_direction, draw_remembered_line, compare_directions
 
 
 class Plan:

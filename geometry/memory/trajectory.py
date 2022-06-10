@@ -1,42 +1,93 @@
 import turtle
+'''
+
+intersection_point = 'empty'
 
 
-def draw_remembered_line(line):
-    if len(line) > 1:
-        line_length = len(line)
-        percent = 0
-
+def compare_directions(line1, line2, index):
+    if len(line1) > 1 and len(line2) > 1 and index < len(line1):
+        global intersection_point
         turtle.penup()
-        turtle.goto(line[percent])
 
-        while turtle.pos() != line[line_length - 1]:
-            turtle.pendown()
-            turtle.pencolor('blue')
-            turtle.goto(line[percent])
-            percent += 1
-    else:
-        print('There is no coordinates to draw line')
+        line1_x_y = line1[index]
+        x1 = line1_x_y[0]
+        y1 = line1_x_y[1]
 
+        line2_x_y = line2[index]
+        x2 = line2_x_y[0]
+        y2 = line2_x_y[1]
 
-def compare_directions(line_one, line_two):
-    if len(line_one) > 1 and len(line_two) > 1:
-        turtle.penup()
-        line_length = len(line_one)
-        index = 0
+        if x1 == x2 and y1 == y2:
+            intersection_point = line1[index]
+            turtle.goto(intersection_point)
+            turtle.dot(8, 'red')
+            print(f'Intersection point is: {intersection_point}')
+            return intersection_point
 
-        while line_one[index] != line_two[index]:
-            if index < line_length - 1:
+        elif x1 >= x2 and y1 >= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 18.0 and y_difference < 18.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(8, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            elif index < len(line1):
                 index += 1
-                if line_one[index] == line_two[index]:
-                    intersection_point = line_one[index]
-                    turtle.goto(intersection_point)
-                    turtle.dot(7, 'red')
-                    return (f'Intersection point is: {intersection_point}')
+                compare_directions(line1, line2, index=index)
             else:
-                return print('There is no intersection point')
+                print('There is no intersection point')
 
+        elif x1 <= x2 and y1 <= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 18.0 and y_difference < 18.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(8, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            elif index < len(line1):
+                index += 1
+                compare_directions(line1, line2, index=index)
+            else:
+                print('There is no intersection point')
+
+        elif x1 <= x2 and y1 >= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 18.0 and y_difference < 18.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(8, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            elif index < len(line1):
+                index += 1
+                compare_directions(line1, line2, index=index)
+            else:
+                print('There is no intersection point')
+
+        elif x1 >= x2 and y1 <= y2:
+            x_difference = x1 - x2
+            y_difference = y1 - y2
+            if x_difference < 18.0 and y_difference < 18.0:
+                intersection_point = line1[index]
+                turtle.goto(intersection_point)
+                turtle.dot(8, 'red')
+                print(f'Intersection point is: {intersection_point}')
+                return intersection_point
+            elif index < len(line1):
+                index += 1
+                compare_directions(line1, line2, index=index)
+            else:
+                print('There is no intersection point')
+
+        else:
+            print('Something wrong before recursion')
     else:
-        print('There is no line or there are no lines to compare')
+        print('There are no lines or line to compare or intersection point was not found or start index not 0')
 
 
 def remember_direction(x_start, y_start, x_finish, y_finish):
@@ -140,49 +191,4 @@ def remember_direction(x_start, y_start, x_finish, y_finish):
                 break
 
         else:
-            print('There is something else')
-
-
-
-'''
-______________________________________________________________________________________________________________________
-Coordinates of the first parallel positive line(-34.0, -20.0, 58.0, 74.0)
-Coordinates of the second parallel positive line(-7.0, -32.0, 85.0, 62.0)
-______________________________________________________________________________________________________________________
-Coordinates of the first parallel negative line(58.0, 74.0, -34.0, -20.0)
-Coordinates of the second parallel negative line(85.0, 62.0, -7.0, -32.0)
-______________________________________________________________________________________________________________________
-Coordinates of the first intersects positive line    1 (34.0, 20.0, 58.0, 74.0)
-                                                     2 (10.0, 12.0, 60.0, 75.0)
-Coordinates of the second intersects positive line   1 (7.0, 32.0, 85.0, 62.0)
-                                                     2 (20.0, 2.0, 50.0, 84.0)
-______________________________________________________________________________________________________________________
-Coordinates of the first intersects negative line    1 (60.0, 75.0, 10.0, 12.0)
-Coordinates of the second intersects negative line   1 (50.0, 84.0, 20.0, 2.0)
-______________________________________________________________________________________________________________________
-Coordinates of the first intersects negative line that isn't recognized as intersecting one (-34.0, 20.0, -58.0, 74.0)
-Coordinates of the second intersects negative line that isn't recognized as intersecting one (7.0, 32.0, -85.0, 62.0)
-______________________________________________________________________________________________________________________
-'''
-
-'''
-
-measured_line = []
-remember_direction(34.0, 20.0, 58.0, 74.0)
-first_line = measured_line
-
-measured_line = []
-remember_direction(7.0, 32.0, 85.0, 62.0)
-second_line = measured_line
-
-draw_remembered_line(first_line)
-draw_remembered_line(second_line)
-
-compare_directions(first_line, second_line)
-
-print(f' line 1: {first_line}')
-print(f' line 2: {second_line}')
-
-turtle.done()
-
-'''
+            print('There is something else')'''
